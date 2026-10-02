@@ -8,8 +8,11 @@ set(PROJECT_VERSION_PRERELEASE "")
 #set(PROJECT_VERSION_PRERELEASE "-devel")
 
 if(MSVC)
+  # keep git from treating an enclosing repository as this tree's, where 'git apply' skips every file and exits 0
+  get_filename_component(FJCONTRIB_WINPATCH_CEILING ${CMAKE_CURRENT_SOURCE_DIR} DIRECTORY)
+  set(FJCONTRIB_GIT ${CMAKE_COMMAND} -E env GIT_CEILING_DIRECTORIES=${FJCONTRIB_WINPATCH_CEILING} git)
   execute_process(COMMAND
-                    git apply --whitespace=fix 0001-required-source-changes-for-windows-build.patch
+                    ${FJCONTRIB_GIT} apply --whitespace=fix 0001-required-source-changes-for-windows-build.patch
                   WORKING_DIRECTORY
                     ${CMAKE_CURRENT_SOURCE_DIR}
                   RESULT_VARIABLE FJCONTRIB_WINPATCH_RESULT
@@ -18,7 +21,7 @@ if(MSVC)
   if(NOT FJCONTRIB_WINPATCH_RESULT EQUAL 0)
     # a re-configure finds the patch already applied
     execute_process(COMMAND
-                      git apply --reverse --check 0001-required-source-changes-for-windows-build.patch
+                      ${FJCONTRIB_GIT} apply --reverse --check 0001-required-source-changes-for-windows-build.patch
                     WORKING_DIRECTORY
                       ${CMAKE_CURRENT_SOURCE_DIR}
                     RESULT_VARIABLE FJCONTRIB_WINPATCH_APPLIED
@@ -27,6 +30,9 @@ if(MSVC)
     if(NOT FJCONTRIB_WINPATCH_APPLIED EQUAL 0)
       message(FATAL_ERROR "0001-required-source-changes-for-windows-build.patch does not apply:\n${FJCONTRIB_WINPATCH_ERROR}")
     endif()
+    message(STATUS "fjcontrib: windows source patch already applied")
+  else()
+    message(STATUS "fjcontrib: applied windows source patch")
   endif()
 endif()
 
