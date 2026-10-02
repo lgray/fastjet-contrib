@@ -114,53 +114,95 @@ foreach (FJCONTRIB_NAME ${fjcontrib_DIRNAMES})
 
   string(TOUPPER ${FJCONTRIB_NAME} FJCONTRIB_NAME_UPPER)
   string(TOLOWER ${FJCONTRIB_NAME} FJCONTRIB_NAME_LOWER)
-  if (FASTJETCONTRIB_ENABLE_${FJCONTRIB_NAME_UPPER})
-    configure_file(${CMAKE_CURRENT_SOURCE_DIR}/scripts/cmake-templates/defines.h.in ${CMAKE_CURRENT_BINARY_DIR}/${FJCONTRIB_NAME}/include/${FJCONTRIB_NAME_LOWER}_defines.h)
+  if (NOT FASTJETCONTRIB_ENABLE_${FJCONTRIB_NAME_UPPER})
+    continue()
+  endif()
+  set(FJCONTRIB_SRC ${CMAKE_CURRENT_SOURCE_DIR}/${FJCONTRIB_NAME})
+  set(FJCONTRIB_BIN ${CMAKE_CURRENT_BINARY_DIR}/${FJCONTRIB_NAME})
+  configure_file(${CMAKE_CURRENT_SOURCE_DIR}/scripts/cmake-templates/defines.h.in ${FJCONTRIB_BIN}/include/${FJCONTRIB_NAME_LOWER}_defines.h)
 
-    set(SRCLINE)
-    set(INCLLINE)
-    set(DEPLINE)
-    file(STRINGS ${CMAKE_CURRENT_SOURCE_DIR}/${FJCONTRIB_NAME}/Makefile FJCONTRIB_MAKEFILE)
-    while(FJCONTRIB_MAKEFILE)
-      list(POP_FRONT FJCONTRIB_MAKEFILE MAKEFILE_LINE)
-      #message("${MAKEFILE_LINE}")
-      if(MAKEFILE_LINE MATCHES "^SRCS=")
-        string(REPLACE "SRCS=" "" SRCLINE "${MAKEFILE_LINE}")
-        set(${FJCONTRIB_NAME_LOWER}_SOURCES "${SRCLINE}")
-      endif()
-      if(MAKEFILE_LINE MATCHES "^INSTALLED_HEADERS=")
-        string(REPLACE "INSTALLED_HEADERS=" "" INCLLINE "${MAKEFILE_LINE}")
-        set(${FJCONTRIB_NAME_LOWER}_INCLUDES "${INCLLINE}")
-      endif()
-      if(MAKEFILE_LINE MATCHES "^DEPENDS_ON\ =")
-        string(REPLACE "DEPENDS_ON\ =" "" DEPLINE "${MAKEFILE_LINE}")
-        string(STRIP "${DEPLINE}" DEPLINE)
-        set(${FJCONTRIB_NAME_LOWER}_DEPENDENCIES "${DEPLINE}")
-      endif()
-    endwhile()
+  # sources, headers and dependencies come from the contrib's own Makefile
+  set(FJCONTRIB_SRCS)
+  set(FJCONTRIB_INSTALLED_HEADERS)
+  set(FJCONTRIB_DEPENDS_ON)
+  file(STRINGS ${FJCONTRIB_SRC}/Makefile FJCONTRIB_MAKEFILE REGEX "^(SRCS|INSTALLED_HEADERS|DEPENDS_ON)[ \t]*=")
+  foreach(MAKEFILE_LINE ${FJCONTRIB_MAKEFILE})
+    string(REGEX MATCH "^([A-Z_]+)[ \t]*=(.*)" MAKEFILE_LINE "${MAKEFILE_LINE}")
+    string(REGEX MATCHALL "[^ \t]+" FJCONTRIB_${CMAKE_MATCH_1} "${CMAKE_MATCH_2}")
+  endforeach()
+  string(REGEX REPLACE "[^;]+" "${FJCONTRIB_SRC}/\\0" FJCONTRIB_SRCS "${FJCONTRIB_SRCS}")
 
-    if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/${FJCONTRIB_NAME}/include)
-      configure_file(${CMAKE_CURRENT_SOURCE_DIR}/scripts/cmake-templates/incfastjet_CMakeLists.txt.in ${CMAKE_CURRENT_SOURCE_DIR}/${FJCONTRIB_NAME}/include/CMakeLists.txt COPYONLY)
-      configure_file(${CMAKE_CURRENT_SOURCE_DIR}/scripts/cmake-templates/inccontrib_CMakeLists.txt.in ${CMAKE_CURRENT_SOURCE_DIR}/${FJCONTRIB_NAME}/include/fastjet/CMakeLists.txt COPYONLY)
-      configure_file(${CMAKE_CURRENT_SOURCE_DIR}/scripts/cmake-templates/incdir_CMakeLists.txt.in ${CMAKE_CURRENT_SOURCE_DIR}/${FJCONTRIB_NAME}/include/fastjet/contrib/CMakeLists.txt)
+  if (EXISTS ${FJCONTRIB_SRC}/include)
+    string(REGEX REPLACE "[^;]+" "${FJCONTRIB_SRC}/include/fastjet/contrib/\\0" FJCONTRIB_INSTALLED_HEADERS "${FJCONTRIB_INSTALLED_HEADERS}")
+  else()
+    string(REGEX REPLACE "[^;]+" "${FJCONTRIB_SRC}/\\0" FJCONTRIB_INSTALLED_HEADERS "${FJCONTRIB_INSTALLED_HEADERS}")
+    file(COPY ${FJCONTRIB_INSTALLED_HEADERS} DESTINATION ${FJCONTRIB_BIN}/include/fastjet/contrib)
+  endif()
+  install(FILES
+            ${FJCONTRIB_INSTALLED_HEADERS}
+            ${FJCONTRIB_BIN}/include/${FJCONTRIB_NAME_LOWER}_defines.h
+          DESTINATION
+            include/fastjet/contrib
+         )
+
+  if (NOT FJCONTRIB_SRCS)
+    continue()
+  endif()
+  if (FASTJETCONTRIB_ENABLE_FRAGILELIB)
+    add_library(${FJCONTRIB_NAME} OBJECT ${FJCONTRIB_SRCS})
+    set_target_properties(${FJCONTRIB_NAME} PROPERTIES POSITION_INDEPENDENT_CODE True)
+  else()
+    add_library(${FJCONTRIB_NAME} SHARED ${FJCONTRIB_SRCS})
+    # per-contrib output directories keep the build-tree layout of one directory per contrib
+    set_target_properties(${FJCONTRIB_NAME} PROPERTIES
+                          LIBRARY_OUTPUT_DIRECTORY ${FJCONTRIB_BIN}
+                          RUNTIME_OUTPUT_DIRECTORY ${FJCONTRIB_BIN}
+                          ARCHIVE_OUTPUT_DIRECTORY ${FJCONTRIB_BIN})
+  endif()
+  target_link_libraries(${FJCONTRIB_NAME} PUBLIC fastjet::fastjettools ${FJCONTRIB_DEPENDS_ON})
+  if (FJCONTRIB_NAME STREQUAL "SDFPlugin")
+    target_link_libraries(${FJCONTRIB_NAME} PUBLIC fastjet::fastjetplugins)
+  endif()
+  target_include_directories(${FJCONTRIB_NAME}
+                             PUBLIC
+                              $<BUILD_INTERFACE:${FJCONTRIB_SRC}/include>
+                              $<BUILD_INTERFACE:${FJCONTRIB_BIN}/include>
+                              $<INSTALL_INTERFACE:include>
+                             )
+
+  if (${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
+    set_target_properties(${FJCONTRIB_NAME} PROPERTIES INSTALL_RPATH "@loader_path")
+  elseif (NOT MSVC)
+    set_target_properties(${FJCONTRIB_NAME} PROPERTIES INSTALL_RPATH "$ORIGIN")
+  endif()
+
+  if (MSVC)
+    target_compile_definitions(${FJCONTRIB_NAME} PUBLIC _USE_MATH_DEFINES)
+    if (FASTJETCONTRIB_ENABLE_FRAGILELIB)
+      target_compile_definitions(${FJCONTRIB_NAME} PRIVATE fastjetcontrib_EXPORTS)
+    else()
+      target_compile_definitions(${FJCONTRIB_NAME} PRIVATE ${FJCONTRIB_NAME_LOWER}_EXPORTS)
     endif()
-    configure_file(${CMAKE_CURRENT_SOURCE_DIR}/scripts/cmake-templates/contrib_CMakeLists.txt.in ${CMAKE_CURRENT_SOURCE_DIR}/${FJCONTRIB_NAME}/CMakeLists.txt)
+  endif()
 
-    add_subdirectory(${FJCONTRIB_NAME})
-    if (TARGET ${FJCONTRIB_NAME})
-      if (FASTJETCONTRIB_ENABLE_FRAGILELIB)
-        set_target_properties(${FJCONTRIB_NAME} PROPERTIES POSITION_INDEPENDENT_CODE True)
-      endif()
-      if (MSVC)
-        target_compile_definitions(${FJCONTRIB_NAME} PUBLIC _USE_MATH_DEFINES)
-        if (FASTJETCONTRIB_ENABLE_FRAGILELIB)
-          target_compile_definitions(${FJCONTRIB_NAME} PRIVATE fastjetcontrib_EXPORTS)
-        else()
-          target_compile_definitions(${FJCONTRIB_NAME} PRIVATE ${FJCONTRIB_NAME_LOWER}_EXPORTS)
-        endif()
-      endif()
-      list(APPEND fjcontrib_combined_TARGETS $<TARGET_OBJECTS:${FJCONTRIB_NAME}>)
-    endif()    
+  if (FASTJETCONTRIB_ENABLE_FRAGILELIB)
+    list(APPEND fjcontrib_combined_TARGETS $<TARGET_OBJECTS:${FJCONTRIB_NAME}>)
+  else()
+    add_library(fastjet::contrib::${FJCONTRIB_NAME} ALIAS ${FJCONTRIB_NAME})
+    install(TARGETS
+              ${FJCONTRIB_NAME}
+            EXPORT
+              FastjetContribTargets
+            RUNTIME
+              COMPONENT Runtime
+              DESTINATION ${CMAKE_INSTALL_BINDIR}
+            LIBRARY
+              COMPONENT Runtime
+              DESTINATION ${CMAKE_INSTALL_LIBDIR}
+            ARCHIVE
+              COMPONENT Development
+              DESTINATION ${CMAKE_INSTALL_LIBDIR}
+           )
   endif()
 
 endforeach()
