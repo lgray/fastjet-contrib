@@ -7,7 +7,8 @@ project(FastJetContrib VERSION 1.105)
 set(PROJECT_VERSION_PRERELEASE "")
 #set(PROJECT_VERSION_PRERELEASE "-devel")
 
-if(MSVC)
+# conda-forge applies this patch as a recipe source patch and does not ship the file
+if(MSVC AND EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/0001-required-source-changes-for-windows-build.patch)
   # keep git from treating an enclosing repository as this tree's, where 'git apply' skips every file and exits 0
   get_filename_component(FJCONTRIB_WINPATCH_CEILING ${CMAKE_CURRENT_SOURCE_DIR} DIRECTORY)
   set(FJCONTRIB_GIT ${CMAKE_COMMAND} -E env GIT_CEILING_DIRECTORIES=${FJCONTRIB_WINPATCH_CEILING} git)
