@@ -7,6 +7,29 @@ project(FastJetContrib VERSION 1.105)
 set(PROJECT_VERSION_PRERELEASE "")
 #set(PROJECT_VERSION_PRERELEASE "-devel")
 
+if(MSVC)
+  execute_process(COMMAND
+                    git apply --whitespace=fix 0001-required-source-changes-for-windows-build.patch
+                  WORKING_DIRECTORY
+                    ${CMAKE_CURRENT_SOURCE_DIR}
+                  RESULT_VARIABLE FJCONTRIB_WINPATCH_RESULT
+                  ERROR_VARIABLE FJCONTRIB_WINPATCH_ERROR
+                 )
+  if(NOT FJCONTRIB_WINPATCH_RESULT EQUAL 0)
+    # a re-configure finds the patch already applied
+    execute_process(COMMAND
+                      git apply --reverse --check 0001-required-source-changes-for-windows-build.patch
+                    WORKING_DIRECTORY
+                      ${CMAKE_CURRENT_SOURCE_DIR}
+                    RESULT_VARIABLE FJCONTRIB_WINPATCH_APPLIED
+                    OUTPUT_QUIET ERROR_QUIET
+                   )
+    if(NOT FJCONTRIB_WINPATCH_APPLIED EQUAL 0)
+      message(FATAL_ERROR "0001-required-source-changes-for-windows-build.patch does not apply:\n${FJCONTRIB_WINPATCH_ERROR}")
+    endif()
+  endif()
+endif()
+
 #----------------------------------------------------------------------
 # version information
 set(FASTJETCONTRIB_VERSION "${PROJECT_VERSION}${PROJECT_VERSION_PRERELEASE}")
