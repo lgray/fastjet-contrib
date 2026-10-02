@@ -91,21 +91,12 @@ if(NOT TARGET fastjet::fastjet)
 endif()
 
 # automatically determine the list of contribs, as done in configure
-file(GLOB MAYBE_CONTRIB_DIRS LIST_DIRECTORIES true RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "${CMAKE_CURRENT_SOURCE_DIR}/*")
-foreach(MAYBE_CONTRIB_DIR ${MAYBE_CONTRIB_DIRS})
-    if(IS_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/${MAYBE_CONTRIB_DIR} AND NOT ${MAYBE_CONTRIB_DIR} STREQUAL "Template")
-        if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/${MAYBE_CONTRIB_DIR}/VERSION
-             OR EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/${MAYBE_CONTRIB_DIR}/FJCONTRIB.cfg
-          )
-          list(APPEND fjcontrib_DIRNAMES ${MAYBE_CONTRIB_DIR})
-        endif()
-    endif()
-endforeach()
+file(GLOB fjcontrib_DIRNAMES RELATIVE ${CMAKE_CURRENT_SOURCE_DIR}
+     "${CMAKE_CURRENT_SOURCE_DIR}/*/VERSION" "${CMAKE_CURRENT_SOURCE_DIR}/*/FJCONTRIB.cfg")
+string(REGEX REPLACE "/[^;]*" "" fjcontrib_DIRNAMES "${fjcontrib_DIRNAMES}")
+list(REMOVE_DUPLICATES fjcontrib_DIRNAMES)
+list(REMOVE_ITEM fjcontrib_DIRNAMES Template)
 
-foreach (FJCONTRIB_NAME ${fjcontrib_DIRNAMES})
-  string(TOUPPER ${FJCONTRIB_NAME} FJCONTRIB_NAME_UPPER)
-  option(FASTJETCONTRIB_ENABLE_${FJCONTRIB_NAME_UPPER} "Enable the ${FJCONTRIB_NAME} Contrib [default=ON]" ON)
-endforeach()
 option(FASTJETCONTRIB_ENABLE_FRAGILELIB "Enable fragile combined mono-library [default=OFF]" OFF)
 
 set(fjcontrib_combined_TARGETS)
@@ -114,6 +105,7 @@ foreach (FJCONTRIB_NAME ${fjcontrib_DIRNAMES})
 
   string(TOUPPER ${FJCONTRIB_NAME} FJCONTRIB_NAME_UPPER)
   string(TOLOWER ${FJCONTRIB_NAME} FJCONTRIB_NAME_LOWER)
+  option(FASTJETCONTRIB_ENABLE_${FJCONTRIB_NAME_UPPER} "Enable the ${FJCONTRIB_NAME} Contrib [default=ON]" ON)
   if (NOT FASTJETCONTRIB_ENABLE_${FJCONTRIB_NAME_UPPER})
     continue()
   endif()
