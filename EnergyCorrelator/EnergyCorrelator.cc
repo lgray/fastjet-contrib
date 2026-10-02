@@ -6,7 +6,7 @@
 //  Copyright (c) 2013-2016
 //  Andrew Larkoski, Lina Necib, Gavin Salam, and Jesse Thaler
 //
-//  $Id: EnergyCorrelator.cc 1106 2018-02-09 01:47:28Z linoush $
+//  $Id: EnergyCorrelator.cc 1579 2026-09-30 14:31:26Z salam $
 //----------------------------------------------------------------------
 // This file is part of FastJet contrib.
 //
@@ -25,6 +25,7 @@
 //----------------------------------------------------------------------
 
 #include "EnergyCorrelator.hh"
+#include <algorithm>
 #include <sstream>
 #include <limits>
 using namespace std;

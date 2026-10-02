@@ -1,4 +1,4 @@
-// $Id: Recluster.cc 1458 2024-12-11 08:25:19Z salam $
+// $Id: Recluster.cc 1584 2026-09-30 14:31:49Z salam $
 //
 // Copyright (c) 2014-, Matteo Cacciari, Gavin P. Salam and Gregory Soyez
 //
@@ -23,6 +23,8 @@
 #include <fastjet/ClusterSequenceActiveAreaExplicitGhosts.hh>
 #include <sstream>
 #include <typeinfo>
+#include <algorithm>
+#include <iterator>
 
 using namespace std;
 

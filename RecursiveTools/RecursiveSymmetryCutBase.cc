@@ -1,4 +1,4 @@
-// $Id: RecursiveSymmetryCutBase.cc 1458 2024-12-11 08:25:19Z salam $
+// $Id: RecursiveSymmetryCutBase.cc 1444 2024-12-09 18:15:56Z salam $
 //
 // Copyright (c) 2014-, Gavin P. Salam, Gregory Soyez, Jesse Thaler
 //
@@ -37,7 +37,7 @@ LimitedWarning RecursiveSymmetryCutBase::_mu2_gt1_warning;
 //LimitedWarning RecursiveSymmetryCutBase::_nonca_warning;
 LimitedWarning RecursiveSymmetryCutBase::_explicit_ghost_warning;
 
-std::atomic<bool> RecursiveSymmetryCutBase::_verbose {false};
+bool RecursiveSymmetryCutBase::_verbose = false;
 
 //----------------------------------------------------------------------
 PseudoJet RecursiveSymmetryCutBase::result(const PseudoJet & jet) const {

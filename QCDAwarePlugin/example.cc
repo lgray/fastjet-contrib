@@ -1,4 +1,4 @@
-// $Id: example.cc 887 2015-10-08 08:27:29Z cspollard $
+// $Id: example.cc 872 2015-09-28 13:30:31Z cspollard $
 //
 // Copyright (c) -, 
 //

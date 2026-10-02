@@ -1,3 +1,13 @@
+2026-09-30  Gavin Salam
+
+	* NEWS:
+	* VERSION:
+	release of version 1.0.2
+
+	* SignalFreeBackgroundEstimator.cc:
+	Batch application of patch from Juan Mighel Carceller & Jesse 
+	Thaler(+Claude) to resolve compilation issues with MacOS27/C++23
+
 2024-06-10  Peter Berta <peter.berta@cern.ch>
 
         * VERSION

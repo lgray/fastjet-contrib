@@ -11,7 +11,7 @@
 /// \endverbatim
 //----------------------------------------------------------------------
 
-// $Id: example_isd.cc 1458 2024-12-11 08:25:19Z salam $
+// $Id: example_isd.cc 1444 2024-12-09 18:15:56Z salam $
 //
 // Copyright (c) 2017, Jesse Thaler, Kevin Zhou
 // based on arXiv:1704.06266 by Christopher Frye, Andrew J. Larkoski,

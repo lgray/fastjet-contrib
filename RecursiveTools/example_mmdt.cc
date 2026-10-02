@@ -13,7 +13,7 @@
 /// It also shows operation in conjunction with a Filter.
 //----------------------------------------------------------------------
 
-// $Id: example_mmdt.cc 1458 2024-12-11 08:25:19Z salam $
+// $Id: example_mmdt.cc 1444 2024-12-09 18:15:56Z salam $
 //
 // Copyright (c) 2014, Gavin P. Salam
 //

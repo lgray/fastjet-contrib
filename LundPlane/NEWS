@@ -1,3 +1,7 @@
+2026/09/30: release of version 2.1.3
+            Batch application of patch from Juan Mighel Carceller & Jesse 
+            Thaler(+Claude) to resolve compilation issues with MacOS27/C++23
+
 2024/12/11: release of version 2.1.2
 - new strucrure suitable for being included as a dependency by other contribs.
 

@@ -1,3 +1,81 @@
+2026-09-30 Gavin, Matteo & Gregory
+
+	* contribs.svn:
+
+	Batch application of patch from Juan Miguel Carceller & Jesse
+	Thaler(+Claude) to resolve compilation issues with MacOS27/C++23
+
+	Contrib                          Old          New
+	-------                          -------      ---
+  	EnergyCorrelator                 1.3.2        1.3.3
+	IFNPlugin                        1.0.4        1.0.5
+	KTClusCXX                        1.0.1        1.0.2
+	LundPlane                        2.1.2        2.1.3
+	Nsubjettiness                    2.3.2        2.3.3
+	RecursiveTools                   2.0.4        2.0.5
+	SignalFreeBackgroundEstimator    1.0.1        1.0.2
+	SoftKiller                       1.0.0        1.0.1
+
+	* scripts/internal/apply-multi-contrib-patch.sh:
+	new script (ChatGPT Sol + Luna) to apply a patch across multiple
+	contribs, including preparing ChangeLog etc. 
+
+2026-07-08 Matteo Cacciari
+
+	* NEWS:
+	* VERSION:
+	prepared for release of 1.104
+
+	* contribs.svn:
+	added DynamicR, v 1.0.2, from Tousik Samui 
+
+2026-06-11 Gavin Salam
+
+	* scripts/internal/release-fjcontrib.sh:
+	fixed up some permission flags (which were too sensitive to umask of 
+	person making the release).
+
+2026-06-11 Gavin Salam
+
+	* NEWS:
+	* VERSION:
+	prepared for release of 1.103
+
+	* contribs.svn:
+	added DISGenkt, v 1.1.0, from van Beekveld, Ferrario Ravasio, 
+	Karlberg and Peake
+	
+2026-03-04 Gavin Salam + Matteo Cacciari
+
+	* scripts/internal/generate-html-contents.pl:
+	updated contents web-page template to include the FJ icon
+	
+2026-03-04 Gavin Salam + Matteo Cacciari
+
+	* NEWS:
+	finalised for release of 1.102
+
+	* contribs.svn:
+	updated QCDAwarePlugin to 2.0.0
+
+	* scripts/internal/common.sh:
+	* scripts/internal/generate-html-contents.pl:
+	* scripts/internal/release-fjcontrib.sh:
+	small updates to make LPTHE the default web destination,
+	based on earlier commits from Matteo
+
+2026-02-22 Gavin Salam
+
+	* README: 	
+	Clarified that C++11 is required and that the configure script will
+	check for it and add relevant compiler options if needed.
+
+2025-04-05  Gavin Salam  <gavin.salam@physics.ox.ac.uk>
+
+	* scripts/update-contribs.sh:
+	added a check for the .svn directory and if it is missing skip the
+	svn update for the top-level repo
+
 2025-02-24 Gavin
 
 	* NEWS:

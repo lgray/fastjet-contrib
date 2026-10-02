@@ -1,4 +1,4 @@
-// $Id: RecursiveLundEEGenerator.hh 1465 2024-12-11 14:53:28Z gsoyez $
+// $Id: RecursiveLundEEGenerator.hh 1582 2026-09-30 14:31:40Z salam $
 //
 // Copyright (c) 2018-, Frederic A. Dreyer, Keith Hamilton, Alexander Karlberg,
 // Gavin P. Salam, Ludovic Scyboz, Gregory Soyez, Rob Verheyen
@@ -24,6 +24,7 @@
 #define __FASTJET_CONTRIB_RECURSIVELUNDEEGENERATOR_HH__
 
 #include "fastjet/contrib/LundEEHelpers.hh"
+#include <algorithm>
 
 #include <fastjet/internal/base.hh>
 #include "fastjet/tools/Recluster.hh"
