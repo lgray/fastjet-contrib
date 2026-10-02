@@ -9,6 +9,8 @@ Subject: [PATCH] required source changes for windows build
  Centauro/Centauro.cc                                   |  4 ++--
  ConstituentSubtractor/ConstituentSubtractor.cc         |  2 +-
  ConstituentSubtractor/ConstituentSubtractor.hh         |  3 ++-
+ DynamicR/DynamicR.cc                                   |  2 +-
+ DynamicR/include/fastjet/contrib/DynamicR.hh           |  3 ++-
  FlavorCone/FlavorCone.cc                               |  2 +-
  FlavorCone/FlavorCone.hh                               |  4 +++-
  GenericSubtractor/GenericSubtractor.cc                 |  6 +++---
@@ -38,7 +40,7 @@ Subject: [PATCH] required source changes for windows build
  .../fastjet/contrib/RecursiveSymmetryCutBase.hh        |  9 +++++----
  VariableR/VariableRPlugin.cc                           |  8 ++++----
  VariableR/VariableRPlugin.hh                           | 10 ++++++----
- 34 files changed, 85 insertions(+), 67 deletions(-)
+ 36 files changed, 88 insertions(+), 69 deletions(-)
 
 diff --git a/CMPPlugin/CMPPlugin.cc b/CMPPlugin/CMPPlugin.cc
 index 07e9289..ea4ccc5 100644
@@ -130,6 +132,40 @@ index 48ac16c..a5d1785 100644
 +    CONSTITUENTSUBTRACTOR_WINDLL static LimitedWarning _warning_unused_rhom;
    };
    
+ 
+diff --git a/DynamicR/DynamicR.cc b/DynamicR/DynamicR.cc
+index 39221fd..3810585 100644
+--- a/DynamicR/DynamicR.cc
++++ b/DynamicR/DynamicR.cc
+@@ -192,7 +192,7 @@ private:
+ //------------------------------------------------------------------
+ 
+ // Static flag to ensure the banner is printed only once.
+-bool DynamicR::_first_time = true;
++DYNAMICR_WINDLL bool DynamicR::_first_time = true;
+ 
+ // Return a human-readable description of the plugin configuration.
+ string DynamicR::description () const {
+diff --git a/DynamicR/include/fastjet/contrib/DynamicR.hh b/DynamicR/include/fastjet/contrib/DynamicR.hh
+index bc3f424..8a87b38 100644
+--- a/DynamicR/include/fastjet/contrib/DynamicR.hh
++++ b/DynamicR/include/fastjet/contrib/DynamicR.hh
+@@ -27,6 +27,7 @@
+ #ifndef __FASTJET_CONTRIB_DYNAMICR_HH__
+ #define __FASTJET_CONTRIB_DYNAMICR_HH__
+ 
++#include "dynamicr_defines.h"
+ #include "fastjet/internal/base.hh"
+ #include "fastjet/JetDefinition.hh"    // JetDefinition class
+ 
+@@ -159,7 +160,7 @@ private:
+ 
+   JetDefinition::DefaultRecombiner _jet_recombiner;  // Recombiner used for merging pseudojets
+ 
+-  static bool _first_time;       // Static flag, will be used for one-time banner printing or setup
++  DYNAMICR_WINDLL static bool _first_time;       // Static flag, will be used for one-time banner printing or setup
+ 
+   template<class BJ> void actual_run(ClusterSequence &) const;  // Internal actual implementation of the clustering run
  
 diff --git a/FlavorCone/FlavorCone.cc b/FlavorCone/FlavorCone.cc
 index 37fd092..1b9257d 100644
