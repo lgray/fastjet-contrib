@@ -172,9 +172,9 @@ if (fjcontrib_combined_TARGETS AND FASTJETCONTRIB_ENABLE_FRAGILELIB)
                                 PUBLIC
                                   $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/${FJCONTRIB_NAME}/include> 
                                   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/${FJCONTRIB_NAME}/include>
-                                  $<INSTALL_INTERFACE:include>
                                 )
    endforeach()
+   target_include_directories(fastjetcontribfragile PUBLIC $<INSTALL_INTERFACE:include>)
 
    add_library(fastjet::contrib::fastjetcontribfragile ALIAS fastjetcontribfragile)
    list(APPEND fjcontrib_INSTALL_TARGETS fastjetcontribfragile)
