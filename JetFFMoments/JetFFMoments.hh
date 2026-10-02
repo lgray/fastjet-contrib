@@ -22,6 +22,8 @@
 #ifndef __FASTJET_CONTRIB_JET_FF_MOMENTS_HH__
 #define __FASTJET_CONTRIB_JET_FF_MOMENTS_HH__
 
+#include "jetffmoments_defines.h"
+
 #include "fastjet/PseudoJet.hh"
 #include "fastjet/FunctionOfPseudoJet.hh"
 #include "fastjet/ClusterSequenceAreaBase.hh"
@@ -281,7 +283,7 @@ private:
   std::vector<PseudoJet> _jets_for_improved_sub;
   mutable Selector _rho_range_for_improved_sub; // mutable as it can take a reference
 
-  static LimitedWarning _warnings_negative_pt;
+  JETFFMOMENTS_WINDLL static LimitedWarning _warnings_negative_pt;
 
   /// initialisation of the internal behaviour
   void _initialise();

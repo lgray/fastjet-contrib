@@ -59,7 +59,7 @@ namespace contrib{
   };
 #endif
 
-  LimitedWarning JetFFMoments::_warnings_negative_pt;
+  JETFFMOMENTS_WINDLL LimitedWarning JetFFMoments::_warnings_negative_pt;
 
   // ctor from a vector of n values
   //  - ns   the vector of n values (all non-negative)

@@ -29,7 +29,6 @@
 #include "fastjet/ClusterSequence.hh"
 #include "fastjet/WrappedStructure.hh"
 
-
 #include <cmath>
 #include <vector>
 #include <list>

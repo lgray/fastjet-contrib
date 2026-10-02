@@ -23,6 +23,8 @@
 #ifndef __FASTJET_CONTRIB_FLAVORCONE_HH__
 #define __FASTJET_CONTRIB_FLAVORCONE_HH__
 
+#include "flavorcone_defines.h"
+
 #include <fastjet/internal/base.hh>
 #include <fastjet/JetDefinition.hh>
 #include <fastjet/ClusterSequence.hh>
@@ -78,7 +80,7 @@ public:
     /// Stored jet to return when no seed is found.
     const PseudoJet _invalid_seed;
     /// Warning when no seed is found.
-    static LimitedWarning _warn_seed;
+    FLAVORCONE_WINDLL static LimitedWarning _warn_seed;
     friend class FlavorConePlugin;
   };
 

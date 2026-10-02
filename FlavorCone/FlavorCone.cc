@@ -109,7 +109,7 @@ bool FlavorConePlugin::exclusive_sequence_meaningful() const {return false;}
 bool FlavorConePlugin::is_spherical() const {return false;}
 
 // Main constructor for the FlavorCone Extras class.
-LimitedWarning FlavorConePlugin::Extras::_warn_seed;
+FLAVORCONE_WINDLL LimitedWarning FlavorConePlugin::Extras::_warn_seed;
 FlavorConePlugin::Extras::Extras() : _invalid_seed(0, 0, 0, -1) {;}
 
 // Return the seed associated with a jet.

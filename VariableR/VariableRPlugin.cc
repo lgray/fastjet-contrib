@@ -44,9 +44,9 @@ namespace contrib {
 
   //----------------------------------------------------------------------
   // Defining static constants
-  const double VariableRPlugin::CALIKE  =  0.0;
-  const double VariableRPlugin::KTLIKE  =  1.0;
-  const double VariableRPlugin::AKTLIKE = -1.0;
+  VARIABLER_WINDLL const double VariableRPlugin::CALIKE  =  0.0;
+  VARIABLER_WINDLL const double VariableRPlugin::KTLIKE  =  1.0;
+  VARIABLER_WINDLL const double VariableRPlugin::AKTLIKE = -1.0;
    
   //----------------------------------------------------------------------
   // classes to help run a Variable R algorithm using NN-type classes
@@ -123,7 +123,7 @@ namespace contrib {
   //----------------------------------------------------------------------
   // now the implementation of VariableR itself
   //----------------------------------------------------------------------
-  LimitedWarning VariableRPlugin::_preclustering_deprecated_warning;
+  VARIABLER_WINDLL LimitedWarning VariableRPlugin::_preclustering_deprecated_warning;
   
   // Constructor that sets VR algorithm parameters
   //  - rho         mass scale for effective radius (i.e. R ~ rho/pT)

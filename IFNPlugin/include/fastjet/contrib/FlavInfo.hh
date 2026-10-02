@@ -4,6 +4,8 @@
 #ifndef __FJCONTRIB_FLAVINFO_HH__
 #define __FJCONTRIB_FLAVINFO_HH__
 
+#include "ifnplugin_defines.h"
+
 #ifdef __FJC_FLAVINFO_USEFJCORE__
 #define fastjet fjcore
 #include "fjcore_local.hh"
@@ -122,18 +124,18 @@ public:
   //}
 
   /// value of flag to indicate that the particle is an incoming beam particle
-  static const int beam = 2;
+  IFNPLUGIN_WINDLL static const int beam = 2;
   /// value of flag to indicate that the particle is a "spectator",
   /// such as a W, which is relevant for calculating the beam distance
   /// in flavour clusterings but does itself take part in the
   /// clustering
-  static const int spectator = 4;
+  IFNPLUGIN_WINDLL static const int spectator = 4;
   int _flav_content[7];
   void update_flavourless_attribute();
-  static const int _is_flavourless = 1;
+  IFNPLUGIN_WINDLL static const int _is_flavourless = 1;
 private:
   int _pdg_code;
-  static const FlavInfo _no_flav;
+  IFNPLUGIN_WINDLL static const FlavInfo _no_flav;
 
 };
 

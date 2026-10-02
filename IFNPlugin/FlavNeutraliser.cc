@@ -9,7 +9,7 @@
 #endif
 
 #include <limits>
-
+#include <algorithm>
 #include <numeric>
 #include <tuple>
 
@@ -26,7 +26,7 @@ namespace contrib{
   
 // Set the scale at which to switch from standard measures (e.g. cosphi_coshy)
 // to delta_R measure for small delta_R
-const double FlavNeutraliser::_deltaR2_handover =
+IFNPLUGIN_WINDLL const double FlavNeutraliser::_deltaR2_handover =
     pow(std::numeric_limits<double>::epsilon(), 0.5);
 
 /// returns true if there is flavour to neutralise betwen jets j & k
@@ -271,6 +271,8 @@ bool jet_flavour_compare(const vector<fastjet::PseudoJet> &j,
   return true;
 }
 
+
+
 //----------------------------------------------------------------------
 // Compare net flavour of each jet from a pair of vector<fastjet::PseudoJet>
 // objects.
@@ -300,6 +302,7 @@ bool jet_net_flavour_compare(vector<fastjet::PseudoJet> &j,
   return 1;
 }
 
+
 //----------------------------------------------------------------------
 // The method takes a ClusterSequence as argument and goes through
 // each step of the declustering to neutralise flavour
@@ -318,10 +321,7 @@ std::vector<PseudoJet> FlavNeutraliser::neutralise(ClusterSequence & cs) const {
   const vector<ClusterSequence::history_element> & hist = cs.history();
 
   // shorthand for the hardness (as of 2022-07-26, not yet being used everywhere)
-  auto hardness = _spherical_algo  
-      ? [](const PseudoJet & j) {return  j.E();}
-      : [](const PseudoJet & j) {return  j.pt();};
-
+  auto hardness = [this](const PseudoJet& j) { return this->_spherical_algo ? j.E() : j.pt();};
 
   // NOTE -- pp ref scale should evolve to become something
   // less sensitive to UE & pileup, but for now take something simple

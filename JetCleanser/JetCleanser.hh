@@ -26,6 +26,8 @@
 #ifndef __FASTJET_CONTRIB_JETCLEANSER_HH__
 #define __FASTJET_CONTRIB_JETCLEANSER_HH__
 
+#include "jetcleanser_defines.h"
+
 #include <fastjet/internal/base.hh>
 
 #include "fastjet/ClusterSequence.hh"
@@ -110,8 +112,8 @@ private:
 #if __cplusplus >= 201103L
   static constexpr double jc_zero = 1.0e-6;
 #else
-  static const double jc_zero;
-#endif 
+  JETCLEANSER_WINDLL static const double jc_zero;
+#endif
 
   double _rsub;
   double _fcut;

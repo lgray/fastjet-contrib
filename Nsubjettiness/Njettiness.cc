@@ -35,8 +35,8 @@ namespace contrib {
 //
 ///////
 
-LimitedWarning Njettiness::_old_measure_warning;
-LimitedWarning Njettiness::_old_axes_warning;
+NSUBJETTINESS_WINDLL LimitedWarning Njettiness::_old_measure_warning;
+NSUBJETTINESS_WINDLL LimitedWarning Njettiness::_old_axes_warning;
 
    
 // Constructor

@@ -32,12 +32,12 @@ FASTJET_BEGIN_NAMESPACE      // defined in fastjet/internal/base.hh
 
 namespace contrib{
 
-LimitedWarning RecursiveSymmetryCutBase::_negative_mass_warning;
-LimitedWarning RecursiveSymmetryCutBase::_mu2_gt1_warning;
+RECURSIVETOOLS_WINDLL LimitedWarning RecursiveSymmetryCutBase::_negative_mass_warning;
+RECURSIVETOOLS_WINDLL LimitedWarning RecursiveSymmetryCutBase::_mu2_gt1_warning;
 //LimitedWarning RecursiveSymmetryCutBase::_nonca_warning;
-LimitedWarning RecursiveSymmetryCutBase::_explicit_ghost_warning;
+RECURSIVETOOLS_WINDLL LimitedWarning RecursiveSymmetryCutBase::_explicit_ghost_warning;
 
-std::atomic<bool> RecursiveSymmetryCutBase::_verbose {false};
+RECURSIVETOOLS_WINDLL std::atomic<bool> RecursiveSymmetryCutBase::_verbose {false};
 
 //----------------------------------------------------------------------
 PseudoJet RecursiveSymmetryCutBase::result(const PseudoJet & jet) const {

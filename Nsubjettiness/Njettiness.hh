@@ -187,9 +187,9 @@ private:
    mutable TauPartition _currentPartition; //partitioning information
 
    /// Warning if the user tries to use v1.0.3 measure style.
-   static LimitedWarning _old_measure_warning;
+   NSUBJETTINESS_WINDLL static LimitedWarning _old_measure_warning;
    /// Warning if the user tries to use v1.0.3 axes style.
-   static LimitedWarning _old_axes_warning;
+   NSUBJETTINESS_WINDLL static LimitedWarning _old_axes_warning;
 
    
 public:

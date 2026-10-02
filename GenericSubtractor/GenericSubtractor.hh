@@ -22,6 +22,8 @@
 #ifndef __FASTJET_CONTRIB_GENERIC_SUBTRACTOR_HH__
 #define __FASTJET_CONTRIB_GENERIC_SUBTRACTOR_HH__
 
+#include "genericsubtractor_defines.h"
+
 #include "fastjet/PseudoJet.hh"
 #include "fastjet/FunctionOfPseudoJet.hh"
 #include "fastjet/LimitedWarning.hh"
@@ -246,11 +248,11 @@ protected:
   // 1) that it caused problems on karnak with g++ 4.0.1 and 2) that
   // we anyway like -infinity as a default, and since that's a function,
   // that's not allowed in an include file.
-  static const double _invalid_rho;
+  GENERICSUBTRACTOR_WINDLL static const double _invalid_rho;
 
   /// deprecated "use_common_bge_for_rho_and_rhom"
-  static LimitedWarning _warning_depracated_use_common_bge;
-  static LimitedWarning _warning_unused_rhom;
+  GENERICSUBTRACTOR_WINDLL static LimitedWarning _warning_depracated_use_common_bge;
+  GENERICSUBTRACTOR_WINDLL static LimitedWarning _warning_unused_rhom;
 };
 
 //------------------------------------------------------------------------

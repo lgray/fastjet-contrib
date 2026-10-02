@@ -25,7 +25,7 @@
 #ifndef __FASTJET_CONTRIB_AXES_DEFINITION_HH__
 #define __FASTJET_CONTRIB_AXES_DEFINITION_HH__
 
-
+#include "nsubjettiness_defines.h"
 #include "MeasureDefinition.hh"
 #include <algorithm>
 #include "ExtraRecombiners.hh"
@@ -267,7 +267,7 @@ public:
 
 private:
    fastjet::JetDefinition _def; ///< Jet definition to use.
-   static LimitedWarning _too_few_axes_warning;
+   NSUBJETTINESS_WINDLL static LimitedWarning _too_few_axes_warning;
 };
 
 ///------------------------------------------------------------------------
@@ -351,7 +351,7 @@ public:
 private:
    fastjet::JetDefinition _def;   ///< Jet definition to use
    int _nExtra;                   ///< Extra axes to find
-   static LimitedWarning _too_few_axes_warning;
+   NSUBJETTINESS_WINDLL static LimitedWarning _too_few_axes_warning;
 };
    
 ///------------------------------------------------------------------------
@@ -394,7 +394,7 @@ public:
 private:
    fastjet::JetDefinition _def;  ///< Jet Definition to use.
    
-   static LimitedWarning _too_few_axes_warning;
+   NSUBJETTINESS_WINDLL static LimitedWarning _too_few_axes_warning;
 
 };
 

@@ -189,7 +189,7 @@ public:
 protected:  
   /// return false if we reached desired layer of grooming _n
   bool continue_grooming(int current_n) const {
-    return ((_n < 0) or (current_n < _n));
+    return ((_n < 0) || (current_n < _n));
   }
   
 private:
