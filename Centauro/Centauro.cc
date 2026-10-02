@@ -66,7 +66,7 @@ namespace contrib{
       nz = jet.pz() * norm;
       pT = jet.perp();
       phi = jet.phi();
-      if(gammaE!=0 && gammaPz!=0){ //gammaE and gammaPz passed, so not running in Breit frame
+      if(gammaE!=0 and gammaPz!=0){ //gammaE and gammaPz passed, so not running in Breit frame
         Q = sqrt(-1.0*(gammaE*gammaE-gammaPz*gammaPz));
         etabar = -2.0*(Q/(gammaE+gammaPz))*(pT/(jet.E()-jet.pz()));
       }
@@ -99,7 +99,7 @@ namespace contrib{
   std::string CentauroPlugin::description () const {
     std::ostringstream desc;
     desc << "Centauro plugin with R = " << R();
-    if(gammaE()==0 && gammaPz()==0){
+    if(gammaE()==0 and gammaPz()==0){
       desc << " gamma E and gamma Pz parameters were not given --> assume you are giving particles momenta in Breit frame";
     }
     return desc.str();

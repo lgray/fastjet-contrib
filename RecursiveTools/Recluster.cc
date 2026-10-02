@@ -48,7 +48,7 @@ FASTJET_BEGIN_NAMESPACE      // defined in fastjet/internal/base.hh
 
 namespace contrib{
 
-RECURSIVETOOLS_WINDLL LimitedWarning Recluster::_explicit_ghost_warning;
+LimitedWarning Recluster::_explicit_ghost_warning;
 
 // class description
 string Recluster::description() const {

@@ -42,14 +42,14 @@ FASTJET_BEGIN_NAMESPACE      // defined in fastjet/internal/base.hh
 
 namespace contrib{
 
-GENERICSUBTRACTOR_WINDLL LimitedWarning GenericSubtractor::_warning_depracated_use_common_bge;
-GENERICSUBTRACTOR_WINDLL LimitedWarning GenericSubtractor::_warning_unused_rhom;
+LimitedWarning GenericSubtractor::_warning_depracated_use_common_bge;
+LimitedWarning GenericSubtractor::_warning_unused_rhom;
 
 //------------------------------------------------------------------------
 // implementation of Genericsubtractor
 //------------------------------------------------------------------------
    
-GENERICSUBTRACTOR_WINDLL const double GenericSubtractor::_invalid_rho = -numeric_limits<double>::infinity();
+  const double GenericSubtractor::_invalid_rho = -numeric_limits<double>::infinity();
 
   // Constructor that takes an externally supplied value for rho and,
   // optionally, for rho_m. The latter defaults to zero.

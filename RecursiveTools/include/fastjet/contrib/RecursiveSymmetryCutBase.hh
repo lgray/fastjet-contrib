@@ -33,7 +33,6 @@
 
 // we'll use the native FJ class for reculstering if available
 #if FASTJET_VERSION_NUMBER >= 30100
-#include "recursivetools_defines.h"
 #include "fastjet/tools/Recluster.hh"
 #else
 #include "Recluster.hh"
@@ -218,7 +217,7 @@ public:
   class StructureType;
 
   /// for testing 
-  RECURSIVETOOLS_WINDLL static std::atomic<bool> _verbose;
+  static std::atomic<bool> _verbose;
 
 protected:
   // the methods below have to be defined by deerived classes
@@ -282,10 +281,10 @@ private:
 
   bool _grooming_mode;  ///< grooming or tagging mode
 
-  RECURSIVETOOLS_WINDLL static LimitedWarning   _negative_mass_warning;
-  RECURSIVETOOLS_WINDLL static LimitedWarning   _mu2_gt1_warning;
+  static LimitedWarning   _negative_mass_warning;
+  static LimitedWarning   _mu2_gt1_warning;
   //static LimitedWarning   _nonca_warning;
-  RECURSIVETOOLS_WINDLL static LimitedWarning   _explicit_ghost_warning;
+  static LimitedWarning   _explicit_ghost_warning;
 
   // additional verbose structure information
   bool _verbose_structure;

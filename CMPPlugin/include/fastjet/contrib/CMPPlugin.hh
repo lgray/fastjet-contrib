@@ -13,8 +13,6 @@
 #ifndef __CMPPLUGIN_HH__
 #define __CMPPLUGIN_HH__
 
-#include "cmpplugin_defines.h"
-
 #include "fastjet/contrib/FlavInfo.hh"
 // to facilitate use with fjcore
 #ifndef __FJC_FLAVINFO_USEFJCORE__
@@ -157,7 +155,7 @@ public:
  }
 
 private:
-  CMPPLUGIN_WINDLL static const double _deltaR2_handover;
+  static const double _deltaR2_handover;
   double _R, _a;
   CorrectionType _correction_type;
   ClusteringType _clustering_type;

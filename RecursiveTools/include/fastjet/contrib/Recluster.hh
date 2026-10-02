@@ -22,8 +22,6 @@
 // along with this code. If not, see <http://www.gnu.org/licenses/>.
 //----------------------------------------------------------------------
 
-#include "recursivetools_defines.h"
-
 #include <fastjet/JetDefinition.hh>
 #include <fastjet/CompositeJetStructure.hh> // to derive the ReclusterStructure from CompositeJetStructure
 #include <fastjet/tools/Transformer.hh>     // to derive Recluster from Transformer
@@ -178,7 +176,7 @@ private:
                                ///< regular clustering or (false) a
                                ///< composite jet with subjets as pieces
 
-  RECURSIVETOOLS_WINDLL static LimitedWarning   _explicit_ghost_warning;
+  static LimitedWarning   _explicit_ghost_warning;
 };
 
 } // namespace contrib

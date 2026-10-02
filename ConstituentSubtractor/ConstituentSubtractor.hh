@@ -25,7 +25,6 @@
 #ifndef __FASTJET_CONTRIB_CONSTITUENTSUBTRACTOR_HH__
 #define __FASTJET_CONTRIB_CONSTITUENTSUBTRACTOR_HH__
 
-#include "constituentsubtractor_defines.h"
 
 #include <fastjet/internal/base.hh>
 #include <fastjet/ClusterSequenceAreaBase.hh>
@@ -319,7 +318,7 @@ namespace contrib{
     fastjet::Selector *_ghost_selector=0;
     fastjet::Selector *_particle_selector=0;
     fastjet::FunctionOfPseudoJet<double> *_rescaling=0;
-    CONSTITUENTSUBTRACTOR_WINDLL static LimitedWarning _warning_unused_rhom;
+    static LimitedWarning _warning_unused_rhom;
   };
   
 

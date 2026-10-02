@@ -176,7 +176,7 @@ bool FlavInfo::has_opposite_flavour(const PseudoJet & particle) const {
 
 //----------------------------------------------------------------------
 // an object with no flavour, that we can conveniently point to
-IFNPLUGIN_WINDLL const FlavInfo FlavInfo::_no_flav;
+const FlavInfo FlavInfo::_no_flav;
 
 //----------------------------------------------------------------------
 string FlavInfo::description() const {

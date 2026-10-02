@@ -140,7 +140,7 @@ private:
    int _N;
    
    /// Warning if the user tries to use v1.0.3 constructor.
-   NSUBJETTINESS_WINDLL static LimitedWarning _old_constructor_warning;
+   static LimitedWarning _old_constructor_warning;
 
 public:
    

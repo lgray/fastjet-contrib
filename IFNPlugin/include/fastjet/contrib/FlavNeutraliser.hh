@@ -153,7 +153,7 @@ private:
   /// the value of deltaR2 below which we replace 2*(cosh-cos) with
   /// (addition as of 2021-09-26, but not yet being used)
   double _p, _q, _a;
-  IFNPLUGIN_WINDLL static const double _deltaR2_handover;
+  static const double _deltaR2_handover;
   bool    _modulo_2;
   measure _measure;
   bool    _use_mass_flav;

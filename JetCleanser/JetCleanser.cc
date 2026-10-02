@@ -32,8 +32,8 @@ namespace contrib{
   // Modification to satisfy C++11 (thanks to Gavin Salam)
 #if __cplusplus >= 201103L
 #else
-  JETCLEANSER_WINDLL const double JetCleanser::jc_zero = 1.0e-6;
-#endif
+  const double JetCleanser::jc_zero = 1.0e-6;
+#endif 
 
   /////////////////////////////
   // constructor

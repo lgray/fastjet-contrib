@@ -28,7 +28,7 @@ FASTJET_BEGIN_NAMESPACE      // defined in fastjet/internal/base.hh
 
 namespace contrib {
 
-NSUBJETTINESS_WINDLL LimitedWarning Nsubjettiness::_old_constructor_warning;
+LimitedWarning Nsubjettiness::_old_constructor_warning;
    
    
 //result returns tau_N with normalization dependent on what is specified in constructor

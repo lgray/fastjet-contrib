@@ -25,7 +25,6 @@
 #include "fastjet/PseudoJet.hh"
 #include <array>
 #include <limits>
-#include <cmath>
 
 FASTJET_BEGIN_NAMESPACE
 

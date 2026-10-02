@@ -18,7 +18,7 @@ constexpr double rap_transition = 0.1;
 constexpr double phi_transition = 0.1;
 
 // Transition point to switch from Omega_ik^2 -> DeltaR_ik^2
-CMPPLUGIN_WINDLL const double CMPPlugin::_deltaR2_handover =
+const double CMPPlugin::_deltaR2_handover =
     pow(std::numeric_limits<double>::epsilon(), 0.5);
 
 /// Info class for particle-independent information

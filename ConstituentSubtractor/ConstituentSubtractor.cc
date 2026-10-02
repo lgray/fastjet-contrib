@@ -28,7 +28,7 @@ FASTJET_BEGIN_NAMESPACE      // defined in fastjet/internal/base.hh
 
 namespace contrib{
 
-CONSTITUENTSUBTRACTOR_WINDLL LimitedWarning ConstituentSubtractor::_warning_unused_rhom;
+LimitedWarning ConstituentSubtractor::_warning_unused_rhom;
 
 
   ///

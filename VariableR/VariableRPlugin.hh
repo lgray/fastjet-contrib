@@ -25,8 +25,6 @@
 #ifndef __FASTJET_CONTRIB_VARIABLERPLUGIN_HH__
 #define __FASTJET_CONTRIB_VARIABLERPLUGIN_HH__
 
-#include "variabler_defines.h"
-
 #include <fastjet/internal/base.hh>
 #include <fastjet/config.h>
 
@@ -64,9 +62,9 @@ namespace contrib {
     /// for the antikt, C/A and kt algorithm which also allow for
     /// backwards compatibility.
     /// (These are initialized in VariableRPlugin.cc.)
-    VARIABLER_WINDLL static const double CALIKE;  //  =  0.0;
-    VARIABLER_WINDLL static const double KTLIKE;  //  =  1.0;
-    VARIABLER_WINDLL static const double AKTLIKE; //  = -1.0;
+    static const double CALIKE;  //  =  0.0;
+    static const double KTLIKE;  //  =  1.0;
+    static const double AKTLIKE; //  = -1.0;
 
     /// for backwards compatibility reasons, we also define ClusterType
     /// as "double"
@@ -136,7 +134,7 @@ namespace contrib {
     JetDefinition _pre_jet_def;
 
     // warn about pre-clustering being deprecated
-    VARIABLER_WINDLL static LimitedWarning _preclustering_deprecated_warning;
+    static LimitedWarning _preclustering_deprecated_warning;
     
     // helper function to decide what strategy is best
     //
