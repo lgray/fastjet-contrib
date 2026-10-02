@@ -83,6 +83,7 @@ list(REMOVE_ITEM fjcontrib_DIRNAMES Template)
 option(FASTJETCONTRIB_ENABLE_FRAGILELIB "Enable fragile combined mono-library [default=OFF]" OFF)
 
 set(fjcontrib_combined_TARGETS)
+set(fjcontrib_INSTALL_TARGETS)
 
 foreach (FJCONTRIB_NAME ${fjcontrib_DIRNAMES})
 
@@ -145,12 +146,6 @@ foreach (FJCONTRIB_NAME ${fjcontrib_DIRNAMES})
                               $<INSTALL_INTERFACE:include>
                              )
 
-  if (${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
-    set_target_properties(${FJCONTRIB_NAME} PROPERTIES INSTALL_RPATH "@loader_path")
-  elseif (NOT MSVC)
-    set_target_properties(${FJCONTRIB_NAME} PROPERTIES INSTALL_RPATH "$ORIGIN")
-  endif()
-
   if (MSVC)
     target_compile_definitions(${FJCONTRIB_NAME} PUBLIC _USE_MATH_DEFINES)
     if (FASTJETCONTRIB_ENABLE_FRAGILELIB)
@@ -164,20 +159,7 @@ foreach (FJCONTRIB_NAME ${fjcontrib_DIRNAMES})
     list(APPEND fjcontrib_combined_TARGETS $<TARGET_OBJECTS:${FJCONTRIB_NAME}>)
   else()
     add_library(fastjet::contrib::${FJCONTRIB_NAME} ALIAS ${FJCONTRIB_NAME})
-    install(TARGETS
-              ${FJCONTRIB_NAME}
-            EXPORT
-              FastjetContribTargets
-            RUNTIME
-              COMPONENT Runtime
-              DESTINATION ${CMAKE_INSTALL_BINDIR}
-            LIBRARY
-              COMPONENT Runtime
-              DESTINATION ${CMAKE_INSTALL_LIBDIR}
-            ARCHIVE
-              COMPONENT Development
-              DESTINATION ${CMAKE_INSTALL_LIBDIR}
-           )
+    list(APPEND fjcontrib_INSTALL_TARGETS ${FJCONTRIB_NAME})
   endif()
 
 endforeach()
@@ -194,28 +176,29 @@ if (fjcontrib_combined_TARGETS AND FASTJETCONTRIB_ENABLE_FRAGILELIB)
                                 )
    endforeach()
 
-   if (${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
-     set_target_properties(fastjetcontribfragile PROPERTIES INSTALL_RPATH "@loader_path")
-   elseif (NOT MSVC)
-     set_target_properties(fastjetcontribfragile PROPERTIES INSTALL_RPATH "$ORIGIN")
-   endif()
-
    add_library(fastjet::contrib::fastjetcontribfragile ALIAS fastjetcontribfragile)
-   install(TARGETS
-            fastjetcontribfragile
-          EXPORT 
-            FastjetContribTargets
-          RUNTIME
-            COMPONENT Runtime
-            DESTINATION ${CMAKE_INSTALL_BINDIR}
-          LIBRARY
-            COMPONENT Runtime
-            DESTINATION ${CMAKE_INSTALL_LIBDIR}
-          ARCHIVE
-            COMPONENT Development
-            DESTINATION ${CMAKE_INSTALL_LIBDIR}
-         )
+   list(APPEND fjcontrib_INSTALL_TARGETS fastjetcontribfragile)
 endif()
+
+if (${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
+  set_target_properties(${fjcontrib_INSTALL_TARGETS} PROPERTIES INSTALL_RPATH "@loader_path")
+elseif (NOT MSVC)
+  set_target_properties(${fjcontrib_INSTALL_TARGETS} PROPERTIES INSTALL_RPATH "$ORIGIN")
+endif()
+install(TARGETS
+          ${fjcontrib_INSTALL_TARGETS}
+        EXPORT
+          FastjetContribTargets
+        RUNTIME
+          COMPONENT Runtime
+          DESTINATION ${CMAKE_INSTALL_BINDIR}
+        LIBRARY
+          COMPONENT Runtime
+          DESTINATION ${CMAKE_INSTALL_LIBDIR}
+        ARCHIVE
+          COMPONENT Development
+          DESTINATION ${CMAKE_INSTALL_LIBDIR}
+       )
 
 # allow Fastjet Contrib to work with find_package
 export(EXPORT FastjetContribTargets
