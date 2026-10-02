@@ -167,6 +167,10 @@ endforeach()
 if (fjcontrib_combined_TARGETS AND FASTJETCONTRIB_ENABLE_FRAGILELIB)
    add_library(fastjetcontribfragile SHARED ${fjcontrib_combined_TARGETS})
    target_link_libraries(fastjetcontribfragile PUBLIC fastjet::fastjettools)
+   # SDFPlugin's headers construct fastjet plugins inline, as its per-contrib target links
+   if (TARGET SDFPlugin)
+     target_link_libraries(fastjetcontribfragile PUBLIC fastjet::fastjetplugins)
+   endif()
    foreach (FJCONTRIB_NAME ${fjcontrib_DIRNAMES})
      target_include_directories(fastjetcontribfragile
                                 PUBLIC
