@@ -184,37 +184,40 @@ if (fjcontrib_combined_TARGETS AND FASTJETCONTRIB_ENABLE_FRAGILELIB)
    list(APPEND fjcontrib_INSTALL_TARGETS fastjetcontribfragile)
 endif()
 
-if (${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
-  set_target_properties(${fjcontrib_INSTALL_TARGETS} PROPERTIES INSTALL_RPATH "@loader_path")
-elseif (NOT MSVC)
-  set_target_properties(${fjcontrib_INSTALL_TARGETS} PROPERTIES INSTALL_RPATH "$ORIGIN")
+# header-only contribs install no library, and an export set needs at least one
+if (fjcontrib_INSTALL_TARGETS)
+  if (${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
+    set_target_properties(${fjcontrib_INSTALL_TARGETS} PROPERTIES INSTALL_RPATH "@loader_path")
+  elseif (NOT MSVC)
+    set_target_properties(${fjcontrib_INSTALL_TARGETS} PROPERTIES INSTALL_RPATH "$ORIGIN")
+  endif()
+  install(TARGETS
+            ${fjcontrib_INSTALL_TARGETS}
+          EXPORT
+            FastjetContribTargets
+          RUNTIME
+            COMPONENT Runtime
+            DESTINATION ${CMAKE_INSTALL_BINDIR}
+          LIBRARY
+            COMPONENT Runtime
+            DESTINATION ${CMAKE_INSTALL_LIBDIR}
+          ARCHIVE
+            COMPONENT Development
+            DESTINATION ${CMAKE_INSTALL_LIBDIR}
+         )
+
+  # allow Fastjet Contrib to work with find_package
+  export(EXPORT FastjetContribTargets
+    NAMESPACE fastjet::contrib::
+    FILE "${CMAKE_CURRENT_BINARY_DIR}/fastjetcontribTargets.cmake"
+  )
+
+  install(EXPORT FastjetContribTargets
+    NAMESPACE fastjet::contrib::
+    FILE fastjetcontribTargets.cmake
+    DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/fastjetcontrib
+  )
 endif()
-install(TARGETS
-          ${fjcontrib_INSTALL_TARGETS}
-        EXPORT
-          FastjetContribTargets
-        RUNTIME
-          COMPONENT Runtime
-          DESTINATION ${CMAKE_INSTALL_BINDIR}
-        LIBRARY
-          COMPONENT Runtime
-          DESTINATION ${CMAKE_INSTALL_LIBDIR}
-        ARCHIVE
-          COMPONENT Development
-          DESTINATION ${CMAKE_INSTALL_LIBDIR}
-       )
-
-# allow Fastjet Contrib to work with find_package
-export(EXPORT FastjetContribTargets
-  NAMESPACE fastjet::contrib::
-  FILE "${CMAKE_CURRENT_BINARY_DIR}/fastjetcontribTargets.cmake"
-)
-
-install(EXPORT FastjetContribTargets
-  NAMESPACE fastjet::contrib::
-  FILE fastjetcontribTargets.cmake
-  DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/fastjetcontrib
-)
 
 include(CMakePackageConfigHelpers)
 
