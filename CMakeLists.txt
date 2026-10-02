@@ -2,18 +2,10 @@ cmake_minimum_required(VERSION 3.7.0)
 include(CMakePrintHelpers)
 
 # set the project name
-project(FastJetContrib VERSION 1.101)
+project(FastJetContrib VERSION 1.105)
 # set a pre-release version if relevant, e.g. "-beta1"
 set(PROJECT_VERSION_PRERELEASE "")
 #set(PROJECT_VERSION_PRERELEASE "-devel")
-
-if(MSVC)
-  execute_process(COMMAND 
-                    git apply --whitespace=fix 0001-required-source-changes-for-windows-build.patch
-                  WORKING_DIRECTORY
-                    ${CMAKE_CURRENT_SOURCE_DIR}
-                 )
-endif()
 
 #----------------------------------------------------------------------
 # version information
