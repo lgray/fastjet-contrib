@@ -3,6 +3,7 @@
 #include <iostream>
 #include <iomanip>
 #include <vector>
+#include <algorithm>
 #include <fastjet/ClusterSequence.hh>
 #include "KTClusCXX.hh"
 

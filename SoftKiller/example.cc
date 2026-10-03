@@ -5,7 +5,7 @@
 //  ./example < ../data/Pythia-Zp2jets-lhc-pileup-1ev.dat
 //----------------------------------------------------------------------
 
-// $Id$
+// $Id: example.cc 769 2015-02-20 14:48:49Z gsalam $
 //
 // Copyright (c) 2014-, Matteo Cacciari, Gavin. P. Salam and Gregory Soyez
 //

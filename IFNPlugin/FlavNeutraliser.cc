@@ -1,4 +1,5 @@
 #include "fastjet/contrib/FlavInfo.hh"
+#include <algorithm>
 #include "fastjet/contrib/MassFlav.hh"
 #include "fastjet/contrib/FlavNeutraliser.hh"
 

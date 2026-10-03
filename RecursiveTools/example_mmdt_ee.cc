@@ -13,7 +13,7 @@
 /// \endverbatim
 //----------------------------------------------------------------------
 
-// $Id: example_mmdt_ee.cc 1458 2024-12-11 08:25:19Z salam $
+// $Id: example_mmdt_ee.cc 1444 2024-12-09 18:15:56Z salam $
 //
 // Copyright (c) 2017-, Gavin P. Salam, Gregory Soyez, Jesse Thaler,
 // Kevin Zhou, Frederic Dreyer

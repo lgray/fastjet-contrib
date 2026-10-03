@@ -1,10 +1,10 @@
-//  QCDAware Package
+//  QCDAwarePlugin Package
 //  Questions/Comments?  abuckley@cern.ch, cpollard@cern.ch
 //
-//  Copyright (c) 2014
-//  Andy Buckley, Chris Pollard
+//  Copyright (c) 2014-2025
+//  Andy Buckley, Chris Pollard, Donatas Zaripovas, Xinyuan Tan
 //
-// $Id: QCDAwarePlugin.hh 887 2015-10-08 08:27:29Z cspollard $
+// $Id: QCDAwarePlugin.hh 1533 2026-03-03 22:30:36Z buckley $
 //
 //----------------------------------------------------------------------
 // This file is part of FastJet contrib.
@@ -67,8 +67,20 @@ namespace contrib {
             public:
                 // User still owns the pointer to dm after using this
                 // constructor.
-                QCDAwarePlugin(const DistanceMeasure *dm)
-                    : _dm(dm) {}
+                QCDAwarePlugin(const DistanceMeasure *dm, 
+                        bool use_couplings=false, 
+                        double coupling_power=-2.0, 
+                        int running_coupling_order_alpha_s=0, 
+                        double alpha_s = 0.1181, 
+                        int running_coupling_order_alpha_em=0, 
+                        double alpha_em = 1.0/128.92)
+                    : _dm(dm),
+                      _use_couplings(use_couplings),
+                      _coupling_power(coupling_power),
+                      _running_coupling_order_alpha_s{running_coupling_order_alpha_s},
+                      _alpha_s{alpha_s},
+                      _running_coupling_order_alpha_em{running_coupling_order_alpha_em},
+                      _alpha_em(alpha_em) {}
 
                 /// default destructor
                 // we don't delete _dm here because it is owned by the
@@ -81,9 +93,28 @@ namespace contrib {
 
                 double R() const;
 
+                // setters for run-time configuration
+                QCDAwarePlugin& set_use_couplings(bool u) { _use_couplings = u; return *this; }
+                QCDAwarePlugin& set_coupling_power(double p) { _coupling_power = p; return *this; }
+                QCDAwarePlugin& set_alpha_s(double as) { _alpha_s = as; return *this; }
+                QCDAwarePlugin& set_alpha_em(double a) { _alpha_em = a; return *this; }
+                QCDAwarePlugin& set_running_coupling_order_alpha_s(int o) { _running_coupling_order_alpha_s = o; return *this; }
+                QCDAwarePlugin& set_running_coupling_order_alpha_em(int o) { _running_coupling_order_alpha_em = o; return *this; }
+                QCDAwarePlugin& set_enable_qcd(bool b) { _enable_qcd = b; return *this; }
+                QCDAwarePlugin& set_enable_qed(bool b) { _enable_qed = b; return *this; }
+
 
             private:
                 const DistanceMeasure *_dm;
+                bool _use_couplings;
+                double _coupling_power;
+                int _running_coupling_order_alpha_s;
+                double _alpha_s;
+                int _running_coupling_order_alpha_em;
+                double _alpha_em;
+
+                bool _enable_qcd{true};
+                bool _enable_qed{true};
 
                 void insert_pj(ClusterSequence &cs,
                         std::priority_queue<PJDist, std::vector<PJDist>, std::greater<PJDist> >& pjds,
@@ -101,7 +132,7 @@ namespace contrib {
 
                 // returns zero if p and q aren't allowed to combine.
                 // returns the combined pid otherwise.
-                int flavor_sum(const fastjet::PseudoJet& p, const fastjet::PseudoJet& q) const;
+                std::pair<int, double> flavor_sum(const fastjet::PseudoJet& p, const fastjet::PseudoJet& q) const;
         };
 
 

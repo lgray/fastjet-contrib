@@ -7,7 +7,7 @@
 // Copyright (c) 2013-2016
 // Andrew Larkoski, Lina Necib, Gavin Salam, and Jesse Thaler
 //
-// $Id: example.cc 1393 2024-02-23 13:38:42Z jthaler $
+// $Id: example.cc 1387 2024-02-23 03:54:00Z jthaler $
 //----------------------------------------------------------------------
 // This file is part of FastJet contrib.
 //
